@@ -3,82 +3,119 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Línea de producción · Tijuana</title>
 <style>
-:root{--bg:#0e1419;--card:#17202a;--bd:#263544;--tx:#e6edf3;--mut:#8b9bab;--ok:#2ecc71;--esp:#4aa3ff;--blq:#f5a623;--fal:#ff4d4f}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px system-ui,sans-serif}
-header{display:flex;gap:12px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
-h1{font-size:17px;margin:0;flex:1}.dot{width:10px;height:10px;border-radius:50%;background:var(--fal);display:inline-block}.dot.on{background:var(--ok)}
-main{padding:14px;max-width:1300px;margin:auto}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
-.k{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px}.k b{display:block;font-size:22px}.k span{color:var(--mut);font-size:12px}
-.linea{display:flex;align-items:stretch;overflow-x:auto;gap:0;padding:6px 0 12px}
-.est{min-width:128px;flex:1;background:var(--card);border:2px solid var(--bd);border-radius:10px;padding:8px;cursor:pointer}
-.est.sel{outline:2px solid #fff}.est h3{margin:0 0 4px;font-size:14px}.est small{color:var(--mut)}
-.badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:12px;color:#06121c;font-weight:600}
-.procesando{background:var(--ok)}.esperando{background:var(--esp)}.bloqueada{background:var(--blq)}.falla{background:var(--fal);color:#fff}
-.est.rcuello{border-color:var(--blq);box-shadow:0 0 12px #f5a62366}.est.rparo{border-color:var(--fal)}
-.bar{height:6px;background:#0b1117;border-radius:4px;margin:6px 0}.bar i{display:block;height:100%;background:var(--ok);border-radius:4px}
-.buf{width:46px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;color:var(--mut);font-size:11px}
-.buf div{display:flex;flex-direction:column-reverse;gap:2px}.buf u{width:18px;height:8px;border:1px solid var(--bd);background:#0b1117}.buf u.f{background:var(--blq);border-color:var(--blq)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:850px){.grid{grid-template-columns:1fr}}
-.panel{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px;margin-bottom:14px}.panel h2{font-size:14px;margin:0 0 8px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
-button,select{background:#22303d;color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;margin:3px;font:inherit;cursor:pointer}
-button.p{background:#1d6fd6;border-color:#1d6fd6}button.r{background:#7a1f22;border-color:var(--fal)}
-#log{max-height:300px;overflow:auto;font:12px ui-monospace,monospace}#log div{padding:3px 0;border-bottom:1px solid #1f2b37}
-.t{color:var(--mut)}.ev-paro_iniciado,.ev-caos_matar_estacion,.ev-caos_matar_buffer{color:var(--fal)}.ev-estacion_reanudada{color:var(--ok)}.ev-cambio_de_ciclo{color:var(--blq)}
-td{padding:2px 10px 2px 0}
+:root{--bg:#0b1220;--c:#111a2b;--c2:#16223a;--bd:#1f2d46;--tx:#e6edf7;--mut:#8a9bb4;--ac:#3b82f6;--ok:#22c55e;--esp:#38bdf8;--blq:#f59e0b;--fal:#ef4444}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.4 Inter,"Segoe UI",system-ui,sans-serif}
+.top{display:flex;align-items:center;gap:12px;padding:14px 28px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.top h1{margin:0;font-size:18px;font-weight:600}.top h1 small{color:var(--mut);font-weight:400;font-size:13px;margin-left:10px}
+.sp{flex:1}.clock{font:600 16px ui-monospace,Consolas,monospace;color:var(--mut)}
+.pill{padding:5px 12px;border-radius:99px;background:var(--c);border:1px solid var(--bd);font-size:12px;color:var(--mut)}
+.pill i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--fal);margin-right:7px}.pill.on i{background:var(--ok)}
+.est-ok{color:#86efac}.est-cu{color:#fcd34d}.est-pa{color:#fca5a5}
+main{max-width:1400px;margin:auto;padding:22px 28px 40px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:18px}
+.k{background:var(--c);border:1px solid var(--bd);border-radius:14px;padding:14px 16px}
+.k span{color:var(--mut);font-size:12px}.k b{display:block;font-size:28px;font-weight:600;margin:4px 0 2px;font-variant-numeric:tabular-nums}.k b small{font-size:14px;color:var(--mut);font-weight:400}
+.k em{font-style:normal;color:var(--mut);font-size:12px}.k svg{display:block;width:100%;height:26px;margin-top:6px}
+.bar{height:6px;background:#0b1424;border-radius:4px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:var(--ac);border-radius:4px;transition:width .5s}
+.card{background:var(--c);border:1px solid var(--bd);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+.card h2{margin:0 0 12px;font-size:12px;font-weight:600;color:var(--ac);text-transform:uppercase;letter-spacing:.09em}
+.line{display:flex;align-items:center;overflow-x:auto;padding:14px 4px 8px}
+.st{position:relative;min-width:132px;flex:1;background:var(--c2);border:1.5px solid var(--bd);border-radius:12px;padding:12px;cursor:pointer;transition:border-color .2s}
+.st:hover{border-color:#34507f}.st.sel{border-color:#fff}.st.cuello{border-color:var(--blq);background:#2a2113}
+.st .h{display:flex;justify-content:space-between;align-items:center;font-weight:600}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--k)}
+.st .s{margin:8px 0 2px;font-size:13px;color:var(--k);font-weight:600;text-transform:capitalize}
+.st small{display:block;color:var(--mut);font-size:12px}
+.tag{position:absolute;top:-9px;left:12px;background:var(--blq);color:#241600;font-size:10px;font-weight:700;padding:1px 8px;border-radius:99px}
+.tag.paro{background:var(--fal);color:#fff}.tag.inanicion{background:var(--esp);color:#04202e}.tag.bloqueo{background:#7a5410;color:#ffe2a6}
+.procesando{--k:var(--ok)}.esperando{--k:var(--esp)}.bloqueada{--k:var(--blq)}.falla{--k:var(--fal)}
+.lk{width:70px;flex:none;text-align:center;color:var(--mut);font-size:11px}
+.tk{display:flex;gap:2px;justify-content:center;margin-bottom:6px}.tk u{width:8px;height:12px;border-radius:2px;background:#0b1424;border:1px solid var(--bd)}.tk u.f{background:var(--blq);border-color:var(--blq)}
+.arr{height:2px;background:#33486b;position:relative;margin:0 6px 5px}.arr:after{content:"";position:absolute;right:-2px;top:-4px;border:5px solid transparent;border-left:7px solid #33486b}
+.cols{display:grid;grid-template-columns:1.1fr 1fr 1.2fr;gap:18px}@media(max-width:1100px){.cols{grid-template-columns:1fr}}
+.cols>div>.card{margin-bottom:18px}
+button,select{background:var(--c2);color:var(--tx);border:1px solid var(--bd);border-radius:9px;padding:8px 12px;margin:3px 4px 3px 0;font:inherit;cursor:pointer}
+button:hover{border-color:var(--ac)}button.go{background:var(--ac);border-color:var(--ac);font-weight:600}button.bad{background:#3a1519;border-color:#7f2a31;color:#fecaca}
+.grp{color:var(--mut);font-size:12px;margin:12px 0 4px}#msg{color:var(--mut);font-size:12px;margin-top:8px;word-break:break-all}
+.row{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:13px}.row span{width:92px;color:var(--mut)}.row .bar{flex:1;margin:0;height:9px}.row b{width:46px;text-align:right;font-variant-numeric:tabular-nums}
+.f1{background:var(--ok)!important}.f2{background:var(--esp)!important}.f3{background:var(--blq)!important}.f4{background:var(--fal)!important}
+.meta{display:flex;gap:22px;margin-top:14px;color:var(--mut);font-size:13px;flex-wrap:wrap}.meta b{display:block;color:var(--tx);font-size:18px}
+.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{margin:0;padding:6px 14px;border-radius:99px;font-size:13px}.tabs button.act{background:var(--ac);border-color:var(--ac)}
+#log{max-height:360px;overflow:auto}.ev{display:flex;gap:10px;padding:8px 2px;border-bottom:1px solid var(--bd);font-size:13px}
+.ev time{color:var(--mut);min-width:64px;font-family:ui-monospace,monospace;font-size:12px}.ev i{width:3px;border-radius:2px;background:var(--esp);flex:none}.ev.b i{background:var(--fal)}.ev.g i{background:var(--ok)}.ev.w i{background:var(--blq)}
 </style></head><body>
-<header><h1>🏭 Línea de producción · Tijuana</h1><span id="reloj" class="t">—</span><span class="dot" id="dot"></span><span id="live" class="t">conectando…</span></header>
+<header class="top"><h1>Línea de producción<small>Planta Tijuana · Turno A</small></h1><div class="sp"></div>
+<span class="pill" id="estado">—</span><span class="clock" id="reloj">00:00:00</span><span class="pill" id="vel">×—</span><span class="pill" id="live"><i></i>conectando</span></header>
 <main>
-<div class="kpis" id="kpis"></div>
-<div class="linea" id="linea"></div>
-<div class="grid">
- <div>
-  <div class="panel"><h2>Simulación</h2>
-   Velocidad <select id="vel"><option value="50">×50 (9 min)</option><option value="200" selected>×200 (2.3 min)</option><option value="1000">×1000 (27 s)</option></select>
-   <button class="p" onclick="post('/api/simulacion/turno?velocidad='+vel.value)">▶ Turno 7.5 h (900 u)</button>
-   <br><button onclick="post('/api/estaciones/4/paro?segundos=180&causa=falla_maquina')">Paro 3 min E4</button>
-   <button onclick="post('/api/estaciones/4/paro?segundos=900&causa=falla_maquina')">Paro 15 min E4</button>
-   <button onclick="post('/api/estaciones/1/paro?segundos=300&causa=falta_material')">Falta material E1</button>
-   <button onclick="post('/api/estaciones/6/ciclo?factor=1.2')">Cambio de modelo +20 % E6</button>
-   <button onclick="post('/api/estaciones/2/ciclo?factor=1.6')">E2 se vuelve lenta ×1.6</button>
-   <button onclick="[1,2,3,4,5,6,7,8].forEach(i=>post('/api/estaciones/'+i+'/ciclo?factor=1.0'))">Restablecer ciclos</button>
-  </div>
-  <div class="panel"><h2>Pruebas de caos</h2>
-   Estación <select id="cn"><option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select>
-   <button class="r" onclick="post('/api/caos/matar_estacion/'+cn.value)">💥 Matar proceso de estación</button>
-   <button class="r" onclick="post('/api/caos/matar_buffer/'+Math.min(7,cn.value))">💥 Matar buffer</button>
-   <button onclick="post('/api/estaciones/'+cn.value+'/reparar')">🔧 Reparar</button>
-   <div id="msg" class="t" style="margin-top:6px"></div>
-  </div>
-  <div class="panel"><h2>Detalle de estación</h2><div id="det" class="t">Haz clic en una estación.</div></div>
- </div>
- <div class="panel"><h2>Bitácora de eventos</h2><div id="log"></div></div>
-</div>
-</main>
+<section class="kpis" id="kpis"></section>
+<section class="card"><h2>Línea de producción</h2><div class="line" id="linea"></div></section>
+<div class="cols">
+ <div><section class="card"><h2>Simulación</h2>
+  Velocidad <select id="velsel"><option value="50">×50 · 9 min</option><option value="200" selected>×200 · 2.3 min</option><option value="1000">×1000 · 27 s</option></select>
+  <button class="go" onclick="post('/api/simulacion/turno?velocidad='+velsel.value)">Iniciar turno 7.5 h</button>
+  <div class="grp">Paros y cambios</div>
+  <button onclick="post('/api/estaciones/4/paro?segundos=180&causa=falla_maquina')">Paro 3 min E4</button>
+  <button onclick="post('/api/estaciones/4/paro?segundos=900&causa=falla_maquina')">Paro 15 min E4</button>
+  <button onclick="post('/api/estaciones/1/paro?segundos=300&causa=falta_material')">Falta material E1</button>
+  <button onclick="post('/api/estaciones/6/ciclo?factor=1.2')">Cambio de modelo +20 % E6</button>
+  <button onclick="post('/api/estaciones/2/ciclo?factor=1.6')">E2 lenta ×1.6</button>
+  <button onclick="[1,2,3,4,5,6,7,8].forEach(i=>post('/api/estaciones/'+i+'/ciclo?factor=1.0'))">Restablecer ciclos</button></section>
+  <section class="card"><h2>Pruebas de caos</h2>
+  Estación <select id="cn"><option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select>
+  <button class="bad" onclick="post('/api/caos/matar_estacion/'+cn.value)">Matar proceso de estación</button>
+  <button class="bad" onclick="post('/api/caos/matar_buffer/'+Math.min(7,cn.value))">Matar buffer</button>
+  <button onclick="post('/api/estaciones/'+cn.value+'/reparar')">Reparar</button><div id="msg"></div></section></div>
+ <section class="card"><h2>Detalle de estación</h2><div id="det"></div></section>
+ <section class="card"><h2>Bitácora de eventos</h2>
+  <div class="tabs" id="tabs"><button class="act" data-t="todos">Todos</button><button data-t="paros">Paros</button><button data-t="ciclos">Cambios de ciclo</button><button data-t="caos">Caos</button></div><div id="log"></div></section>
+</div></main>
 <script>
-let sel=4,E=null;const $=id=>document.getElementById(id);
-const f=(x,d=0)=>(x==null?0:x).toFixed(d), hm=s=>{s=Math.round(s);return Math.floor(s/3600)+'h '+String(Math.floor(s%3600/60)).padStart(2,'0')+'m'};
-async function post(u){try{const r=await fetch(u,{method:'POST'});const j=await r.json();$('msg').textContent='OK '+JSON.stringify(j)}catch(e){$('msg').textContent='Error '+e}}
+let sel=4,E=null,R=[],tab='todos';const H={th:[],cap:[],wip:[],ci:[]};const $=id=>document.getElementById(id);
+const f=(x,d=0)=>(x==null?0:+x).toFixed(d),p2=n=>String(n).padStart(2,'0');
+const hms=s=>{s=Math.max(0,Math.round(s));return p2(Math.floor(s/3600))+':'+p2(Math.floor(s%3600/60))+':'+p2(s%60)};
+async function post(u){try{const r=await fetch(u,{method:'POST'});$('msg').textContent=u.split('?')[0]+' → '+JSON.stringify(await r.json())}catch(e){$('msg').textContent='Error '+e}}
+function sp(a,col){if(a.length<2)return '<svg></svg>';const mx=Math.max(...a,1),n=a.length;
+ return '<svg viewBox="0 0 100 26" preserveAspectRatio="none"><polyline fill="none" stroke="'+col+'" stroke-width="1.6" vector-effect="non-scaling-stroke" points="'+a.map((v,i)=>(i*100/(n-1)).toFixed(1)+','+(24-v/mx*22).toFixed(1)).join(' ')+'"/></svg>'}
+function kpi(t,v,s,x){return '<div class="k"><span>'+t+'</span><b>'+v+'</b><em>'+s+'</em>'+(x||'')+'</div>'}
+function push(k,v){H[k].push(v);if(H[k].length>60)H[k].shift()}
 function pintar(d){E=d;if(!d.estaciones)return;
- $('reloj').textContent='t sim '+hm(d.t_sim)+(d.terminado?' · turno terminado':'')+' · ×'+d.vel;
- const c=d.estaciones.find(e=>e.id==d.cuello);
- const K=[[d.salidas+' / '+d.demanda,'piezas terminadas'],[f(d.th_hora_ventana),'pzas/h (últ. 10 min) · meta '+f(d.th_objetivo_hora)],
- [f(d.capacidad_hora,1),'capacidad real/h (cuello '+(c?f(c.ciclo_s,0)+' s':'—')+')'],[d.wip,'WIP (piezas en proceso)'],
- [f(d.ciclo_little_s),'ciclo s · Little = WIP/salida'],[d.razon_cuello=='ninguno'?'—':'E'+d.cuello,'cuello ('+d.razon_cuello+')'],[hm(d.paro_total_s),'paro acumulado']];
- $('kpis').innerHTML=K.map(k=>'<div class="k"><b>'+k[0]+'</b><span>'+k[1]+'</span></div>').join('');
- let h='';d.estaciones.forEach((e,i)=>{
-  h+='<div class="est '+(e.id==sel?'sel ':'')+(e.rol=='cuello'?'rcuello ':'')+(e.rol=='paro'?'rparo':'')+'" onclick="sel='+e.id+';pintar(E)"><h3>E'+e.id+' <small>'+f(e.ciclo_s)+' s</small></h3>'+
-  '<span class="badge '+e.estado+'">'+e.estado+'</span><div class="bar"><i style="width:'+f(e.util*100)+'%"></i></div><small>util '+f(e.util*100)+'% · '+(e.rol=='normal'?'ok':e.rol)+'<br>hechas '+e.hechas+'</small></div>';
-  const b=d.buffers[i];if(b){let u='';for(let k=0;k<b.cap;k++)u+='<u class="'+(k<b.nivel?'f':'')+'"></u>';h+='<div class="buf"><div>'+u+'</div>'+b.nivel+'/'+b.cap+'</div>'}});
+ $('reloj').textContent=hms(d.t_sim);$('vel').textContent='×'+d.vel;
+ const par=d.estaciones.find(e=>e.estado=='falla'),c=d.estaciones.find(e=>e.id==d.cuello),es=$('estado');
+ if(d.terminado){es.className='pill';es.textContent='Turno terminado'}else if(!d.produciendo){es.className='pill';es.textContent='En espera'}
+ else if(par){es.className='pill est-pa';es.textContent='Paro en E'+par.id}else if(d.razon_cuello=='utilizacion'){es.className='pill est-cu';es.textContent='Cuello de botella: E'+d.cuello}
+ else{es.className='pill est-ok';es.textContent='Operando'}
+ if(d.produciendo){push('th',d.th_hora_ventana);push('cap',d.capacidad_hora);push('wip',d.wip);push('ci',d.ciclo_little_s)}else{H.th=[];H.cap=[];H.wip=[];H.ci=[]}
+ $('kpis').innerHTML=kpi('Piezas terminadas',d.salidas+' <small>/ '+d.demanda+'</small>','avance del turno','<div class="bar"><i style="width:'+Math.min(100,d.salidas/d.demanda*100)+'%"></i></div>')+
+  kpi('Salida actual',f(d.th_hora_ventana)+' <small>pzas/h</small>','meta '+f(d.th_objetivo_hora)+' · takt '+f(d.takt_s)+' s',sp(H.th,'#22c55e'))+
+  kpi('Capacidad real',f(d.capacidad_hora,1)+' <small>pzas/h</small>','cuello de '+(c?f(c.ciclo_s):'—')+' s',sp(H.cap,'#f59e0b'))+
+  kpi('WIP',d.wip+' <small>pzas</small>','piezas en proceso',sp(H.wip,'#38bdf8'))+
+  kpi('Tiempo de ciclo',f(d.ciclo_little_s/60,1)+' <small>min</small>','Little: WIP ÷ salida',sp(H.ci,'#3b82f6'))+
+  kpi('Cuello de botella',d.razon_cuello=='ninguno'?'—':'E'+d.cuello,d.razon_cuello=='paro'?'por paro':'por utilización')+
+  kpi('Paro acumulado',f(d.paro_total_s/60,1)+' <small>min</small>','todas las estaciones');
+ let h='';d.estaciones.forEach((e,i)=>{const r=e.rol,tg=r=='cuello'?'Cuello de botella':r=='paro'?'Paro':r=='inanicion'?'Inanición':r=='bloqueo'?'Bloqueo':'';
+  h+='<div class="st '+e.estado+(r=='cuello'?' cuello':'')+(e.id==sel?' sel':'')+'" onclick="sel='+e.id+';pintar(E)">'+(tg?'<span class="tag '+(r=='cuello'?'':r)+'">'+tg+'</span>':'')+
+   '<div class="h">E'+e.id+'<i class="dot"></i></div><div class="s">'+e.estado+'</div><small>Ciclo '+f(e.ciclo_s)+' s</small><small>Utilización '+f(e.util*100)+' %</small><small>Hechas '+e.hechas+'</small></div>';
+  const b=d.buffers[i];if(b){let u='';for(let k=0;k<b.cap;k++)u+='<u class="'+(k<b.nivel?'f':'')+'"></u>';h+='<div class="lk"><div class="tk">'+u+'</div><div class="arr"></div>'+b.nivel+'/'+b.cap+'</div>'}});
  $('linea').innerHTML=h;
- const e=d.estaciones.find(x=>x.id==sel);if(e)$('det').innerHTML='<b style="color:var(--tx)">Estación '+e.id+'</b> · <span class="badge '+e.estado+'">'+e.estado+'</span><table><tr><td>Ciclo base × factor</td><td>'+f(e.ciclo_s,1)+' s</td></tr><tr><td>Pieza en manos</td><td>'+(e.pieza==null?'—':'#'+e.pieza)+'</td></tr>'+
-  '<tr><td>% procesando</td><td>'+f(e.util*100)+'</td></tr><tr><td>% esperando (inanición)</td><td>'+f(e.pct_esp*100)+'</td></tr><tr><td>% bloqueada</td><td>'+f(e.pct_bloq*100)+'</td></tr><tr><td>% en falla</td><td>'+f(e.pct_falla*100)+'</td></tr>'+
-  '<tr><td>Piezas hechas</td><td>'+e.hechas+'</td></tr><tr><td>Reinicios del proceso</td><td>'+e.reinicios+'</td></tr>'+(e.estado=='falla'?'<tr><td>Falla restante</td><td>'+f(e.falla_restante)+' s ('+e.causa+')</td></tr>':'')+'</table>';
-}
+ const e=d.estaciones.find(x=>x.id==sel);if(e){const row=(n,v,k)=>'<div class="row"><span>'+n+'</span><div class="bar"><i class="'+k+'" style="width:'+f(v*100)+'%"></i></div><b>'+f(v*100)+' %</b></div>';
+  $('det').innerHTML='<div style="font-size:20px;font-weight:600">Estación '+e.id+' <span class="s '+e.estado+'" style="font-size:13px;color:var(--k);text-transform:capitalize">· '+e.estado+'</span></div>'+
+   row('Procesando',e.util,'f1')+row('Esperando',e.pct_esp,'f2')+row('Bloqueada',e.pct_bloq,'f3')+row('En falla',e.pct_falla,'f4')+
+   '<div class="meta"><div><b>'+e.hechas+'</b>Piezas hechas</div><div><b>'+e.reinicios+'</b>Reinicios</div><div><b>'+(e.pieza==null?'—':'#'+e.pieza)+'</b>Pieza actual</div>'+
+   (e.estado=='falla'?'<div><b>'+f(e.falla_restante)+' s</b>Falla restante</div>':'')+'</div>'}}
+const CA={falla_maquina:'Falla de máquina',falta_material:'Falta de material'};
+function txt(e){const d=e.datos||{};switch(e.tipo){
+ case 'turno_iniciado':return 'Turno iniciado a ×'+d.velocidad;case 'turno_terminado':return 'Turno terminado con '+d.salidas+' piezas';
+ case 'paro_iniciado':return 'Paro iniciado: '+(CA[d.causa]||d.causa)+' en Estación '+d.estacion+' ('+d.segundos+' s)';
+ case 'estacion_reanudada':return 'Estación '+d.estacion+' reanudó';case 'cambio_de_ciclo':return 'Cambio de ciclo en Estación '+d.estacion+': ×'+d.factor;
+ case 'caos_matar_estacion':return 'Caos: proceso de Estación '+d.estacion+' eliminado';case 'caos_matar_buffer':return 'Caos: buffer '+d.buffer+' eliminado';default:return e.tipo}}
+const CL={paro_iniciado:'b',caos_matar_estacion:'b',caos_matar_buffer:'b',estacion_reanudada:'g',turno_terminado:'g',cambio_de_ciclo:'w'};
+const FT={todos:()=>1,paros:e=>e.tipo=='paro_iniciado'||e.tipo=='estacion_reanudada',ciclos:e=>e.tipo=='cambio_de_ciclo',caos:e=>/^caos/.test(e.tipo)};
+function bita(){$('log').innerHTML=R.filter(FT[tab]).map(e=>'<div class="ev '+(CL[e.tipo]||'')+'"><i></i><time>'+hms(e.t_sim)+'</time><div>'+txt(e)+'</div></div>').join('')||'<div class="ev"><i></i><div>Sin eventos</div></div>'}
+$('tabs').onclick=ev=>{const t=ev.target.dataset.t;if(!t)return;tab=t;[...$('tabs').children].forEach(b=>b.className=b.dataset.t==t?'act':'');bita()};
 function conectar(){const s=new EventSource('/api/stream');
- s.addEventListener('linea',m=>{$('dot').className='dot on';$('live').textContent='en vivo';pintar(JSON.parse(m.data))});
- s.onerror=()=>{$('dot').className='dot';$('live').textContent='reconectando…'}}
-async function bit(){try{const r=await (await fetch('/api/bitacora')).json();
- $('log').innerHTML=r.map(e=>'<div class="ev-'+e.tipo+'"><span class="t">#'+e.n+' · '+hm(e.t_sim)+'</span> '+e.tipo+' '+JSON.stringify(e.datos)+'</div>').join('')}catch(e){}}
+ s.addEventListener('linea',m=>{$('live').className='pill on';$('live').innerHTML='<i></i>en vivo';pintar(JSON.parse(m.data))});
+ s.onerror=()=>{$('live').className='pill';$('live').innerHTML='<i></i>reconectando'}}
+async function bit(){try{R=await (await fetch('/api/bitacora')).json();bita()}catch(e){}}
 conectar();bit();setInterval(bit,1500);
 </script></body></html>
